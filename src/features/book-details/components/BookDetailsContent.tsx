@@ -10,15 +10,28 @@ import { useBookDetails } from '@/lib/queries';
 
 const BookDetailsContent = ({ props }: { props: SearchBookDoc }) => {
   const { colors } = useTheme();
-  const { data, isLoading, isError, refetch, error } = useBookDetails(props.key);
+  const { data, isLoading, isPaused, isError, refetch } = useBookDetails(props.key);
 
   const renderDetails = () => {
     if (isLoading) {
       return <ActivityIndicator size="large" color={colors.textMuted} />;
     }
 
+    if (isPaused && !data) {
+      return (
+        <Text style={[styles.description, { color: colors.textMuted }]}>
+          You're offline. The details will load when you're back online.
+        </Text>
+      );
+    }
+
     if (isError) {
-      return <ErrorMessage message={error.message} onRetry={refetch} />;
+      return (
+        <ErrorMessage
+          message="Couldn't load the book details. Check your connection and try again."
+          onRetry={refetch}
+        />
+      );
     }
 
     const description = data?.description?.value;

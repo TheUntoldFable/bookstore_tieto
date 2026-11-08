@@ -2,6 +2,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import Banner from '@/components/Banner';
 import { useTheme } from '@/hooks/useTheme';
 import { queryClient } from '@/lib/queryClient';
 import { Navigation } from '@/navigation/RootNavigator';
@@ -15,6 +16,7 @@ function App() {
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>
         <Navigation theme={navigationTheme} />
+        <Banner />
       </QueryClientProvider>
     </SafeAreaProvider>
   );

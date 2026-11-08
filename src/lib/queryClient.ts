@@ -1,5 +1,11 @@
-import { QueryClient } from '@tanstack/react-query';
+import NetInfo from '@react-native-community/netinfo';
+import { onlineManager, QueryClient } from '@tanstack/react-query';
 import { isAxiosError } from 'axios';
+
+// Pause queries while offline and resume them on reconnect.
+onlineManager.setEventListener((setOnline) =>
+  NetInfo.addEventListener((state) => setOnline(!!state.isConnected))
+);
 
 const MAX_RETRIES = 2;
 

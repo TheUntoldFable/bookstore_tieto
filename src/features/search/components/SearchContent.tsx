@@ -18,7 +18,7 @@ const SearchScreen = () => {
   const debouncedQuery = useDebouncedValue(query, SEARCH_DEBOUNCE_MS);
   const searchTerm = query.trim() ? debouncedQuery : '';
 
-  const { data, isLoading, isError, refetch } = useSearchBooks(searchTerm);
+  const { data, isLoading, isPaused, isError, refetch } = useSearchBooks(searchTerm);
 
   const renderContent = () => {
     if (isLoading) {
@@ -36,6 +36,10 @@ const SearchScreen = () => {
           onRetry={refetch}
         />
       );
+    }
+
+    if (isPaused && !data) {
+      return <Empty message="You're offline. Your search will run when you're back online." />;
     }
 
     if (data?.numFound === 0) {
