@@ -3,10 +3,10 @@ import axios from 'axios';
 import { CoverSize, SearchBooksParams } from '@/features/search/lib/types';
 
 export const BASE_URL = 'https://openlibrary.org';
+export const COVERS_URL = 'https://covers.openlibrary.org';
 
 export const SEARCH_URL = `${BASE_URL}/search.json`;
-
-const COVERS_URL = 'https://covers.openlibrary.org';
+// export const WORKS_URL = `${BASE_URL}/works`;
 
 export const getCoverUrl = (coverId: number, size: CoverSize) =>
   `${COVERS_URL}/b/id/${coverId}-${size}.jpg`;
@@ -19,5 +19,10 @@ export const searchBooks = async (query: string, signal?: AbortSignal) => {
   };
 
   const result = await axios.get(SEARCH_URL, { signal, params });
+  return result.data;
+};
+
+export const getBookDetails = async (workKey: string, signal?: AbortSignal) => {
+  const result = await axios.get(`${BASE_URL}${workKey}.json`, { signal });
   return result.data;
 };

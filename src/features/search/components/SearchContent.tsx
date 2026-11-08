@@ -1,16 +1,9 @@
 import { CircleX } from 'lucide-react-native';
-import { useState } from 'react';
-import {
-  ActivityIndicator,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
+import React, { useState } from 'react';
+import { ActivityIndicator, FlatList, Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import Empty from '@/components/Empty';
 import ErrorMessage from '@/components/ErrorMessage';
 import { radii, space, textStyles } from '@/constants/tokens';
 import BookListItem from '@/features/search/components/BookListItem';
@@ -25,13 +18,13 @@ const SearchScreen = () => {
   const debouncedQuery = useDebouncedValue(query, SEARCH_DEBOUNCE_MS);
   const searchTerm = query.trim() ? debouncedQuery : '';
 
-  const { data, isFetching, isLoading, isError, refetch } = useSearchBooks(searchTerm);
+  const { data, isLoading, isError, refetch } = useSearchBooks(searchTerm);
 
   const renderContent = () => {
-    if (isLoading || isFetching) {
+    if (isLoading) {
       return (
         <View style={styles.noResultsContainer}>
-          <ActivityIndicator size="large" color={colors.text} style={styles.indicator} />
+          <ActivityIndicator size="large" color={colors.text} />
         </View>
       );
     }
@@ -46,11 +39,7 @@ const SearchScreen = () => {
     }
 
     if (data?.numFound === 0) {
-      return (
-        <View style={styles.noResultsContainer}>
-          <Text style={[styles.noResultsText, { color: colors.textMuted }]}>No results found</Text>
-        </View>
-      );
+      return <Empty />;
     }
 
     return (
@@ -116,15 +105,10 @@ const styles = StyleSheet.create({
   clearButton: {
     paddingRight: space.md,
   },
-  indicator: {
-    marginTop: space.lg,
-  },
+
   noResultsContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  noResultsText: {
-    ...textStyles.heading,
   },
 });
