@@ -10,6 +10,7 @@ export type ThemeColors = {
   accent: string;
   onAccent: string;
   danger: string;
+  warning: string;
 };
 
 export type Theme = {
@@ -32,6 +33,7 @@ export const lightTheme: Theme = {
     accent: palette.forest,
     onAccent: palette.white,
     danger: palette.oxblood,
+    warning: palette.ochre,
   },
   space,
   radii,
@@ -50,6 +52,7 @@ export const darkTheme: Theme = {
     accent: palette.sage,
     onAccent: palette.forestDeep,
     danger: palette.coral,
+    warning: palette.honey,
   },
   space,
   radii,

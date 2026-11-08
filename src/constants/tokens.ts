@@ -9,6 +9,7 @@ export const palette = {
   forest: '#2F5D46',
   white: '#FFFFFF',
   oxblood: '#A33A2C',
+  ochre: '#8A5A00',
   // Dark theme
   charcoal: '#1B1814',
   charcoalRaised: '#24201B',
@@ -19,6 +20,7 @@ export const palette = {
   sage: '#86B89A',
   forestDeep: '#10241A',
   coral: '#E8907F',
+  honey: '#E0B05C',
 } as const;
 
 export const space = {

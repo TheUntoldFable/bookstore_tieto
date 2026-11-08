@@ -1,5 +1,6 @@
-import { useTheme } from '@react-navigation/native';
 import { StyleSheet, Text, View } from 'react-native';
+
+import { useTheme } from '@/hooks/useTheme';
 
 import { textStyles } from '../constants/tokens';
 
@@ -24,5 +25,6 @@ const styles = StyleSheet.create({
   },
   noResultsText: {
     ...textStyles.heading,
+    textAlign: 'center',
   },
 });
