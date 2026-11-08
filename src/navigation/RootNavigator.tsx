@@ -18,7 +18,10 @@ export const RootStack = createNativeStackNavigator({
     }),
     BookDetails: createNativeStackScreen({
       screen: BooksDetailsScreen,
-      options: { title: 'Book details' },
+      options: ({ route }) => ({
+        title: route.params.title ?? 'Book details',
+        headerBackButtonDisplayMode: 'minimal',
+      }),
     }),
   },
 });

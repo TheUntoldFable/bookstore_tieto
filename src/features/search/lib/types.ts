@@ -19,3 +19,11 @@ export type SearchBooksParams = {
 };
 
 export type CoverSize = 'S' | 'M' | 'L';
+
+export type BookDetails = {
+  description: {
+    type: string;
+    value: string;
+  };
+  first_publish_date: string;
+};

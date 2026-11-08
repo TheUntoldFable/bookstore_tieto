@@ -1,5 +1,6 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { radii, space, textStyles } from '@/constants/tokens';
 import { BookListItemProps } from '@/features/search/types';
@@ -9,31 +10,42 @@ import { getCoverUrl } from '@/lib/api';
 const BookListItem = ({ book }: BookListItemProps) => {
   const { colors } = useTheme();
   const authors = book.author_name?.join(', ');
+  const navigation = useNavigation();
 
   return (
-    <View style={[styles.row, { borderBottomColor: colors.border }]}>
-      {book.cover_i ? (
-        <Image
-          source={{ uri: getCoverUrl(book.cover_i, 'M') }}
-          style={[styles.cover, { backgroundColor: colors.surfaceMuted }]}
-        />
-      ) : (
-        <View style={[styles.cover, { backgroundColor: colors.surfaceMuted }]} />
-      )}
-      <View style={styles.details}>
-        <Text style={[styles.title, { color: colors.text }]} numberOfLines={2}>
-          {book.title}
-        </Text>
-        {authors && (
-          <Text style={[styles.meta, { color: colors.textMuted }]} numberOfLines={1}>
-            {authors}
+    <Pressable
+      onPress={() =>
+        navigation.navigate('BookDetails', {
+          ...book,
+        })
+      }
+    >
+      <View style={[styles.row, { borderBottomColor: colors.border }]}>
+        {book.cover_i ? (
+          <Image
+            source={{ uri: getCoverUrl(book.cover_i, 'M') }}
+            style={[styles.cover, { backgroundColor: colors.surfaceMuted }]}
+          />
+        ) : (
+          <View style={[styles.cover, { backgroundColor: colors.surfaceMuted }]} />
+        )}
+        <View style={styles.details}>
+          <Text style={[styles.title, { color: colors.text }]} numberOfLines={2}>
+            {book.title}
           </Text>
-        )}
-        {book.first_publish_year !== undefined && (
-          <Text style={[styles.meta, { color: colors.textMuted }]}>{book.first_publish_year}</Text>
-        )}
+          {authors && (
+            <Text style={[styles.meta, { color: colors.textMuted }]} numberOfLines={1}>
+              {authors}
+            </Text>
+          )}
+          {book.first_publish_year !== undefined && (
+            <Text style={[styles.meta, { color: colors.textMuted }]}>
+              {book.first_publish_year}
+            </Text>
+          )}
+        </View>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
